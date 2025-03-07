@@ -180,6 +180,8 @@ export default class VueSlider extends Vue {
 
   @Prop(Boolean) hideLabel?: boolean
 
+  @Prop(Boolean) invertCoordinate?: Boolean
+
   @Prop() dotOptions?: DotOption | DotOption[]
 
   @Prop() dotAttrs?: object
@@ -766,8 +768,9 @@ export default class VueSlider extends Vue {
 
   private getPosByEvent(e: MouseEvent | TouchEvent): number {
     return (
-      getPos(e, this.$refs.rail, this.isReverse, this.zoom)[this.isHorizontal ? 'x' : 'y'] /
-      this.scale
+      getPos(e, this.$refs.rail, this.isReverse, this.zoom)[
+        this.isHorizontal && !this.invertCoordinate ? 'x' : 'y'
+      ] / this.scale
     )
   }
 
